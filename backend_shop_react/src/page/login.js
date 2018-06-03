@@ -13,7 +13,7 @@ class Login extends Component {
                         <p className="login-box-msg">Nhập thông tin đăng nhập</p>
                         <form action="../../index2.html" method="post">
                         <div className="form-group has-feedback">
-                            <input type="email" className="form-control" placeholder="Email" />
+                            <input type="text" className="form-control" placeholder="Tên tài khoản" />
                             <span className="glyphicon glyphicon-envelope form-control-feedback" />
                         </div>
                         <div className="form-group has-feedback">
