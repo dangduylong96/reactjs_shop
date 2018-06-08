@@ -19,7 +19,7 @@ class Login extends Component {
     }
     handleSubmit=(event)=>{
         event.preventDefault();
-        console.log(this.state);
+        let { txtusername, txtpassword }= this.state;
     }
     render() {
         return (
@@ -41,11 +41,6 @@ class Login extends Component {
                             </div>
                             <div className="row">
                                 <div className="col-xs-8">
-                                    <div className="checkbox icheck">
-                                        <label>
-                                        <input type="checkbox" /> Nhớ tài khoản
-                                        </label>
-                                    </div>
                                 </div>
                                 <div className="col-xs-4">
                                     <button type="submit" className="btn btn-primary btn-block btn-flat">Đăng nhập</button>

@@ -7,18 +7,18 @@ import Footer from '../../components/layout/footer';
 import DashboardContent from '../../components/dashboard/dashboardContent';
 
 class Dashboard extends Component {
-  render() {
-    return (
-        <div className="hold-transition skin-blue sidebar-mini">
-            <div className="wrapper">
-                <Header />
-                <SideBar />
-                <DashboardContent />
-                <Footer />
+    render() {
+        return (
+            <div className="hold-transition skin-blue sidebar-mini">
+                <div className="wrapper">
+                    <Header />
+                    <SideBar />
+                    <DashboardContent />
+                    <Footer />
+                </div>
             </div>
-        </div>
-    );
-  }
+        );
+    }
 }
 
 export default connect()(Dashboard);

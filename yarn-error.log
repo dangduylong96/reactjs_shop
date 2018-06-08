@@ -1,0 +1,32 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Program Files\Yarn\bin\yarn.js start
+
+PATH: 
+  C:\Python27\;C:\Python27\Scripts;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\Microsoft SQL Server\110\Tools\Binn\;C:\Program Files\Microsoft SQL Server\110\DTS\Binn\;C:\Program Files\Microsoft SQL Server\110\Tools\Binn\ManagementStudio\;C:\Program Files\Microsoft Visual Studio 10.0\Common7\IDE\PrivateAssemblies\;C:\Program Files\Git\cmd;C:\xampp\php;C:\ProgramData\ComposerSetup\bin;C:\Program Files\Skype\Phone\;C:\composer;C:\ProgramData\chocolatey\bin;C:\Program Files\nodejs\;C:\Program Files\Java\jdk1.8.0_162\bin;C:\Users\dangd\AppData\Local\Android\Sdk\platform-tools;C:\Program Files\Yarn\bin\;C:\Users\dangd\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Microsoft VS Code\bin;C:\Program Files\Heroku\bin;C:\Users\dangd\AppData\Roaming\Composer\vendor\bin;C:\composer;C:\Users\dangd\AppData\Roaming\npm;C:\Users\dangd\AppData\Local\Android\Sdk\platform-tools;C:\Users\dangd\AppData\Local\Yarn\bin
+
+Yarn version: 
+  1.5.1
+
+Node version: 
+  9.9.0
+
+Platform: 
+  win32 ia32
+
+npm manifest: 
+  No manifest
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
+
+Trace: 
+  Error: Couldn't find a package.json file in "C:\\xampp\\htdocs\\reactjs_shop"
+      at new MessageError (C:\Program Files\Yarn\lib\cli.js:186:110)
+      at C:\Program Files\Yarn\lib\cli.js:40048:15
+      at Generator.next (<anonymous>)
+      at step (C:\Program Files\Yarn\lib\cli.js:98:30)
+      at C:\Program Files\Yarn\lib\cli.js:109:13
+      at <anonymous>
