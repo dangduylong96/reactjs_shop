@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
 
-import testReducer from './testReducer';
+import isLoginReducer from './isLoginReducer';
+import isLoadingReducer from './isLoadingReducer';
 
 const reducer= combineReducers({
-    testReducer: testReducer
+    isLogin: isLoginReducer,
+    isLoading: isLoadingReducer
 });
 export default reducer;

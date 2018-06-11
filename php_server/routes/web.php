@@ -11,6 +11,15 @@
 |
 */
 
+
 Route::get('/', function () {
-    return view('welcome');
+    $arr=[1,2,3];
+    return json_encode($arr);
+});
+Route::post('login','adminUserController@login');
+Route::get('checkToken','adminUserController@checkToken');
+/**Admin */
+Route::group(['prefix' => 'admin'], function() {
+    // Route::post('login','adminUserController@login');
+    Route::get('checkToken','adminUserController@checkToken');
 });
