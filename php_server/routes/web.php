@@ -19,7 +19,6 @@ Route::get('/', function () {
 Route::post('login','adminUserController@login');
 Route::get('checkToken','adminUserController@checkToken');
 /**Admin */
-Route::group(['prefix' => 'admin'], function() {
-    // Route::post('login','adminUserController@login');
-    Route::get('checkToken','adminUserController@checkToken');
+Route::group(['prefix' => 'admin','middleware'=>'adminMiddleware'], function() {
+    Route::get('getDetailAdmin','adminUserController@getDetailAdmin');
 });

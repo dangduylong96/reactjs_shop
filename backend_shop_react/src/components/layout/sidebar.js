@@ -1,8 +1,26 @@
 import React, { Component } from 'react';
-
+import { Link } from 'react-router-dom';
+import { requestGet } from '../../api/apiRequest';
 import { connect } from 'react-redux';
 
+import SEVER_CONFIG from '../../config/severConfig';
 class SideBar extends Component {
+    constructor(props){
+        super(props);
+        this.state={
+            userName: ''
+        }
+    }
+    componentDidMount() {
+        const _token=localStorage.getItem('_token');
+        const url=SEVER_CONFIG.url+'/getDetailAdmin?token='+_token;
+        requestGet(url)
+        .then(res=>{
+            this.setState({
+                userName: res.data.userName
+            })
+        })
+    }
 	render() {
 		return (
             <aside className="main-sidebar">
@@ -11,11 +29,11 @@ class SideBar extends Component {
                 {/* Sidebar user panel */}
                 <div className="user-panel">
                     <div className="pull-left image">
-                    <img src="dist/img/user2-160x160.jpg" className="img-circle" alt="User Image" />
+                    <img src="dist/img/user2-160x160.jpg" className="img-circle" alt="" />
                     </div>
                     <div className="pull-left info">
-                    <p>Alexander Pierce</p>
-                    <a href="#"><i className="fa fa-circle text-success" /> Online</a>
+                    <p>{this.state.userName}</p>
+                    <Link to="#"><i className="fa fa-circle text-success" /> Trực tuyến</Link>
                     </div>
                 </div>
                 {/* search form */}
@@ -31,27 +49,20 @@ class SideBar extends Component {
                 {/* /.search form */}
                 {/* sidebar menu: : style can be found in sidebar.less */}
                 <ul className="sidebar-menu" data-widget="tree">
-                    <li className="header">MAIN NAVIGATION</li>
+                    <li className="header">Menu</li>
                     <li className="active treeview">
-                    <a href="#">
-                        <i className="fa fa-dashboard" /> <span>Dashboard</span>
-                        <span className="pull-right-container">
-                        <i className="fa fa-angle-left pull-right" />
-                        </span>
-                    </a>
-                    <ul className="treeview-menu">
-                        <li className="active"><a href="index.html"><i className="fa fa-circle-o" /> Dashboard v1</a></li>
-                        <li><a href="index2.html"><i className="fa fa-circle-o" /> Dashboard v2</a></li>
-                    </ul>
+                        <Link to="#">
+                            <i className="fa fa-dashboard" /> <span>Dashboard</span>
+                        </Link>
                     </li>
                     <li className="treeview">
-                    <a href="#">
+                    <Link to="#">
                         <i className="fa fa-files-o" />
                         <span>Layout Options</span>
                         <span className="pull-right-container">
                         <span className="label label-primary pull-right">4</span>
                         </span>
-                    </a>
+                    </Link>
                     <ul className="treeview-menu">
                         <li><a href="pages/layout/top-nav.html"><i className="fa fa-circle-o" /> Top Navigation</a></li>
                         <li><a href="pages/layout/boxed.html"><i className="fa fa-circle-o" /> Boxed</a></li>
@@ -68,9 +79,9 @@ class SideBar extends Component {
                     </a>
                     </li>
                     <li className="header">LABELS</li>
-                    <li><a href="#"><i className="fa fa-circle-o text-red" /> <span>Important</span></a></li>
-                    <li><a href="#"><i className="fa fa-circle-o text-yellow" /> <span>Warning</span></a></li>
-                    <li><a href="#"><i className="fa fa-circle-o text-aqua" /> <span>Information</span></a></li>
+                    <li><Link to="#"><i className="fa fa-circle-o text-red" /> <span>Important</span></Link></li>
+                    <li><Link to="#"><i className="fa fa-circle-o text-yellow" /> <span>Warning</span></Link></li>
+                    <li><Link to="#"><i className="fa fa-circle-o text-aqua" /> <span>Information</span></Link></li>
                 </ul>
                 </section>
                 {/* /.sidebar */}

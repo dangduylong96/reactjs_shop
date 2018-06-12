@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 class DashboardContent extends Component {
@@ -8,12 +8,12 @@ class DashboardContent extends Component {
             <div className="content-wrapper">
                 <section className="content-header">
                     <h1>
-                        Dashboard
-                        <small>Control panel</small>
+                        Quản trị
+                        <small>Bảng quản trị</small>
                     </h1>
                     <ol className="breadcrumb">
-                        <li><a href="#"><i className="fa fa-dashboard" /> Home</a></li>
-                        <li className="active">Dashboard</li>
+                        <li><Link to="#"><i className="fa fa-dashboard" /> Admin</Link></li>
+                        <li className="active">Quản trị</li>
                     </ol>
                 </section>
                 <section className="content">
@@ -28,7 +28,7 @@ class DashboardContent extends Component {
                             <div className="icon">
                             <i className="ion ion-bag" />
                             </div>
-                            <a href="#" className="small-box-footer">More info <i className="fa fa-arrow-circle-right" /></a>
+                            <Link to="#" className="small-box-footer">More info <i className="fa fa-arrow-circle-right" /></Link>
                         </div>
                         </div>
                         {/* ./col */}
@@ -42,7 +42,7 @@ class DashboardContent extends Component {
                             <div className="icon">
                             <i className="ion ion-stats-bars" />
                             </div>
-                            <a href="#" className="small-box-footer">More info <i className="fa fa-arrow-circle-right" /></a>
+                            <Link to="#" className="small-box-footer">More info <i className="fa fa-arrow-circle-right" /></Link>
                         </div>
                         </div>
                         {/* ./col */}
@@ -56,7 +56,7 @@ class DashboardContent extends Component {
                             <div className="icon">
                             <i className="ion ion-person-add" />
                             </div>
-                            <a href="#" className="small-box-footer">More info <i className="fa fa-arrow-circle-right" /></a>
+                            <Link to="#" className="small-box-footer">More info <i className="fa fa-arrow-circle-right" /></Link>
                         </div>
                         </div>
                         {/* ./col */}
@@ -70,7 +70,7 @@ class DashboardContent extends Component {
                             <div className="icon">
                             <i className="ion ion-pie-graph" />
                             </div>
-                            <a href="#" className="small-box-footer">More info <i className="fa fa-arrow-circle-right" /></a>
+                            <Link to="#" className="small-box-footer">More info <i className="fa fa-arrow-circle-right" /></Link>
                         </div>
                         </div>
                     </div>

@@ -56,10 +56,26 @@ class adminUserController extends Controller
             return response()->json(['token_absent'], $e->getStatusCode());
     
         }
+        $type=Auth::user()->type;
+        if($type!==0){
+            return response()->json('Tài khoản của bạn k phải là admin',200);
+        }
         $result=[
             'status'=>'success',
             'message'=>'Token chính xác',
             'data'=>[]
+        ];
+        return response(json_encode($result), 200);
+    }
+    protected function getDetailAdmin(){
+        $admin=Auth::user();
+        $data=[
+            'userName'=>$admin->name
+        ];
+        $result=[
+            'status'=>'success',
+            'message'=>'Token chính xác',
+            'data'=>$data
         ];
         return response(json_encode($result), 200);
     }

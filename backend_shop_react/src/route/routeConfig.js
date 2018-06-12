@@ -15,6 +15,8 @@ var isLogin=async(token)=>{
     .then(async res=>{
         if(res.status==='success'){
             return true;
+        }else{
+            return false;
         }
     })
     .catch(async error=>{
@@ -43,7 +45,7 @@ class RouteConfig extends Component {
     }
     render() {
         this.checkLogin();
-        let { isLogin, isLoading }=this.props;
+        let { isLoading }=this.props;
         if (isLoading) {
             return <p>loading...</p>;
         }

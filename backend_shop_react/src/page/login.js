@@ -89,7 +89,6 @@ class Login extends Component {
 }
 function mapStateToProps(state){
     return {
-        isLogin: state.isLogin,
         isLoading: state.isLoading
     }
 }
