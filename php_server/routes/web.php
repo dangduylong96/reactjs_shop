@@ -21,4 +21,10 @@ Route::get('checkToken','adminUserController@checkToken');
 /**Admin */
 Route::group(['prefix' => 'admin','middleware'=>'adminMiddleware'], function() {
     Route::get('getDetailAdmin','adminUserController@getDetailAdmin');
+    //Category
+    Route::get('listCategory','CategoryController@listCategory');
+    Route::get('getCateById','CategoryController@getCateById');
+    Route::post('addCategory','CategoryController@addCategory');
+    Route::put('editCategory','CategoryController@editCategory');
+    Route::delete('deleteCategory','CategoryController@deleteCategory');
 });

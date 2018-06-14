@@ -4,16 +4,16 @@ import { connect } from 'react-redux';
 import Header from '../../components/layout/header';
 import SideBar from '../../components/layout/sidebar';
 import Footer from '../../components/layout/footer';
-import DashboardContent from '../../components/dashboard/dashboardContent';
 
-class Dashboard extends Component {
+class Layout extends Component {
     render() {
+        var { location, match }=this.props;
         return (
             <div className="hold-transition skin-blue sidebar-mini">
                 <div className="wrapper">
                     <Header />
                     <SideBar />
-                    <DashboardContent />
+                    <this.props.content location={location} match={match}/>
                     <Footer />
                 </div>
             </div>
@@ -21,4 +21,4 @@ class Dashboard extends Component {
     }
 }
 
-export default connect()(Dashboard);
+export default connect()(Layout);

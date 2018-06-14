@@ -13,7 +13,7 @@ class DashboardContent extends Component {
                     </h1>
                     <ol className="breadcrumb">
                         <li><Link to="#"><i className="fa fa-dashboard" /> Admin</Link></li>
-                        <li className="active">Quản trị</li>
+                        <li>Quản trị</li>
                     </ol>
                 </section>
                 <section className="content">

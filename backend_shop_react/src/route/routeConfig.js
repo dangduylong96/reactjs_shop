@@ -39,7 +39,7 @@ class RouteConfig extends Component {
     showRoute(){
         let { isLogin }=this.props;
         return dataRoute.map(e=>(
-            <PrivateRoute key={e.path} path={e.path} exact={e.exact} component={e.main} isLogin={isLogin}/>
+            <PrivateRoute key={e.path?e.path:'/notFound'} path={e.path} exact={e.exact} component={e.main} isLogin={isLogin}/>
         ))
         
     }

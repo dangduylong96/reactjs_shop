@@ -18,3 +18,10 @@ body, html{
 .hold-transition{
     height: 100%;
 }
+.error{
+    color: red;
+    margin-top: 5px
+}
+.btn-table-admin{
+    margin-right: 10px
+}
