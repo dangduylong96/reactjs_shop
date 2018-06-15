@@ -104,9 +104,9 @@ class SideBar extends Component {
                                 <i className="fa fa-angle-left pull-right"></i>
                             </span>
                         </Link>
-                        <ul className="treeview-menu">
+                        <ul className="treeview-menu" id="product">
                             <li><a href="pages/layout/top-nav.html"><i className="fa fa-circle-o text-yellow" /> Danh sách sản phẩm</a></li>
-                            <li><a href="pages/layout/boxed.html"><i className="fa fa-circle-o text-yellow" /> Thêm sản phẩm</a></li>
+                            <li className={currentPath==='/addProduct'?'active':''} data-active="product"><a href="/addProduct"><i className="fa fa-circle-o text-yellow" /> Thêm sản phẩm</a></li>
                         </ul>
                     </li>
                     <li>

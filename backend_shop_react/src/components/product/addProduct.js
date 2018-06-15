@@ -1,20 +1,54 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+import SectionHeader from '../layout/sectionHeader';
+import { requestGet, requestDelete } from '../../api/apiRequest';
+import SEVER_CONFIG from '../../config/severConfig';
+
 class AddProduct extends Component {
+    constructor(props){
+        super(props);
+        this.state={
+            listCategory: [],
+            txtNameProduct: '',
+            valueCategory: -1,
+            txtUrlImage:'',
+            txtPrice: 0,
+            txtdesc: '',
+            valueStatus: 1,
+
+            errorNameProduct: '',
+            errortxtPrice: '',
+            errortxtdesc: ''
+        }
+    }
+    componentDidMount() {
+        const token=localStorage.getItem('_token');
+        const url=`${SEVER_CONFIG.url}/listCategory?token=${token}`;
+        requestGet(url)
+        .then(res=>{
+            this.setState({
+                listCategory: res.data
+            })
+        })
+    }
+    handleInputChange=(event)=>{
+        let target=event.target;
+        let name=target.name;
+        let value=target.value;
+        this.setState({
+            [name]: value
+        })
+    }
 	render() {
+        const { listCategory }=this.state;
+        const renderCategory=listCategory.map(e=>
+            <option key={e.id} value={e.id}>{e.name}</option>
+        )
 		return (
            <div className="content-wrapper">
-                {/* Content Header (Page header) */}
-                <section className="content-header">
-                    <h1>sản phẩm</h1>
-                    <ol className="breadcrumb">
-                        <li><a href="#"><i className="fa fa-dashboard" /> Home</a></li>
-                        <li className="active">Thêm sản phẩm</li>
-                    </ol>
-                </section>
-                {/* Main content */}
+                <SectionHeader title='Sản phẩm' start='Admin' to='Thêm sản phẩm'/>
                 <section className="content">
                     <div className="row">
                         <div className="col-md-12">
@@ -27,65 +61,55 @@ class AddProduct extends Component {
                                         <div className="form-group">
                                             <label htmlFor="inputEmail3" className="col-sm-2 control-label">Tên sản phẩm</label>
                                             <div className="col-sm-10">
-                                            <input name="name" type="text" className="form-control" id="name" placeholder="Tên sản phẩm" defaultValue="{{old('name','')}}" required />
-                                            <span className="error">{'{'}{'{'}$errors-&gt;first('name'){'}'}{'}'}</span>
+                                                <input name="txtNameProduct" type="text" className="form-control" placeholder="Tên sản phẩm" defaultValue={this.state.txtNameProduct} required onChange={this.handleInputChange}/>
+                                                <span className="error">{this.state.errorNameProduct}</span>
                                             </div>
                                         </div>
                                         <div className="form-group">
                                             <label htmlFor="inputEmail3" className="col-sm-2 control-label">Loại</label>
                                             <div className="col-sm-10">
-                                            <select name="category" className="form-control select2" style={{width: '100%'}}>
-                                                <option value="0">Loại 1</option>
-                                            </select>
-                                            <span className="error">Lỗi</span>
+                                                <select name="category" className="form-control select2" style={{width: '100%'}} onChange={this.handleInputChange}>
+                                                    <option key={-1} value={-1}>--Chọn loại sản phẩm--</option>
+                                                    {renderCategory}
+                                                </select>
                                             </div>
                                         </div>
                                         <div className="form-group">
                                             <label htmlFor="inputEmail3" className="col-sm-2 control-label">Giá</label>
                                             <div className="col-sm-10">
-                                            <input name="price" type="text" className="form-control" id="price" placeholder="Giá sản phẩm" defaultValue="{{old('price','')}}" required step="0.01" />
-                                            <span className="error">Lỗi</span>
+                                                <input name="txtPrice" type="text" className="form-control" id="price" placeholder="Giá sản phẩm" defaultValue={this.state.txtPrice} required step="0.01" onChange={this.handleInputChange}/>
+                                                <span className="error">{this.state.errortxtPrice}</span>
                                             </div>
                                         </div>
                                         <div className="form-group">
                                             <label htmlFor="inputPassword3" className="col-sm-2 control-label">Hình</label>
                                             <div className="col-sm-10">
-                                            <input name="image" type="file" id="imgInp" />
-                                            <span className="error">Lỗi</span>
-                                            <br />
-                                            <img id="blah" src="{{url('/public/images/admin/')}}" alt="Hình ảnh sản phẩm" width="122px" height="133px" />
+                                                <input name="image" type="file" id="imgInp" />
+                                                {/* <span className="error">Lỗi</span> */}
+                                                <br />
+                                                <img id="blah" src={this.state.txtUrlImage===''?'../image/not_found_image.jpg':this.state.txtUrlImage} alt="Hình ảnh sản phẩm" width="122px" height="133px" />
                                             </div>
                                         </div>
                                         <div className="form-group">
                                             <label htmlFor="inputEmail3" className="col-sm-2 control-label">Mô tả</label>
                                             <div className="col-sm-10">
-                                            <textarea id="desc" name="desc" className="form-control" rows={10} placeholder="Sơ lược về bài đăng" required defaultValue={"{{old('desc')}}"} />
-                                            <span className="error">Lỗi</span>
-                                            </div>
-                                        </div> 
-                                        <div className="form-group">
-                                            <label htmlFor="inputEmail3" className="col-sm-2 control-label">Sales (%)</label>
-                                            <div className="col-sm-10">
-                                            <input id="sale" name="sale" type="text" className="form-control" placeholder="Giảm giá.VD: 10% thì nhập 0.1" defaultValue="{{old('sale','')}}" step="0.01" />
-                                            <span className="error">Lỗi</span>
+                                                <textarea id="desc" name="txtdesc" className="form-control" rows={10} placeholder="Sơ lược về bài đăng" required defaultValue={this.state.txtdesc} onChange={this.handleInputChange}/>
+                                                <span className="error">{this.state.errortxtdesc}</span>
                                             </div>
                                         </div>
                                         <div className="form-group">
                                             <label htmlFor="inputEmail3" className="col-sm-2 control-label">Trạng thái</label>
                                             <div className="col-sm-10">
-                                            <select name="status" className="form-control select2" style={{width: '100%'}}>
+                                            <select name="valueStatus" value={this.state.valueStatus} className="form-control select2" style={{width: '100%'}} onChange={this.handleInputChange}>
                                                 <option value={1}>Hiện</option>
                                                 <option value={0}>Ẩn</option>
                                             </select>
-                                            <span className="error">Lỗi</span>
                                             </div>
                                         </div>
                                     </div>
-                                    {/* /.box-body */}
                                     <div className="box-footer">
                                         <button type="submit" className="btn btn-success btn-block">Thêm</button>
                                     </div>
-                                    {/* /.box-footer */}
                                 </form>
                             </div>
                         </div>
