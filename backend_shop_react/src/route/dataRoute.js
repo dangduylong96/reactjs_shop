@@ -3,6 +3,9 @@ import React from 'react';
 import Layout from '../page/admin/layout';
 import DashboardContent from '../components/dashboard/dashboardContent'; 
 import AddProduct from '../components/product/addProduct'; 
+import EditProduct from '../components/product/editProduct'; 
+import listProduct from '../components/product/listProduct'; 
+
 //Category
 import ListCategory from '../components/category/listCategory'; 
 import AddCategory from '../components/category/addCategory'; 
@@ -32,9 +35,19 @@ const dataRoute=[
         main:({location, match})=> <Layout content={EditCategory} location={location} match={match}/>
     },
     {
+        path: '/listProduct',
+        exact: true,
+        main:({location})=> <Layout content={listProduct} location={location}/>
+    },
+    {
         path: '/addProduct',
         exact: true,
         main:()=> <Layout content={AddProduct}/>
+    },
+    {
+        path: '/editProduct/:id',
+        exact: true,
+        main:({location, match})=> <Layout content={EditProduct} location={location} match={match}/>
     },
     {
         main:()=> <Layout content={Error404}/>

@@ -27,4 +27,10 @@ Route::group(['prefix' => 'admin','middleware'=>'adminMiddleware'], function() {
     Route::post('addCategory','CategoryController@addCategory');
     Route::put('editCategory','CategoryController@editCategory');
     Route::delete('deleteCategory','CategoryController@deleteCategory');
+    //Product
+    Route::get('listProduct','productController@listProduct');
+    Route::get('getProductById','productController@getProductById');
+    Route::post('addProduct','productController@addProduct');
+    Route::put('editProduct','productController@editProduct');
+    Route::delete('deleteProduct','productController@deleteProduct');
 });

@@ -96,7 +96,7 @@ class SideBar extends Component {
                             <li className={currentPath==='/addCategory'?'active':''} data-active="category"><Link to="/addCategory"><i className="fa fa-circle-o text-yellow" /> Thêm loại</Link></li>
                         </ul>
                     </li>
-                    <li className="treeview" onClick={this.isActive}>
+                    <li className="treeview" onClick={this.isActive} id="product">
                         <Link to="#">
                             <i className="fa fa-product-hunt" />
                             <span>Quản lí sản phẩm</span>
@@ -105,22 +105,10 @@ class SideBar extends Component {
                             </span>
                         </Link>
                         <ul className="treeview-menu" id="product">
-                            <li><a href="pages/layout/top-nav.html"><i className="fa fa-circle-o text-yellow" /> Danh sách sản phẩm</a></li>
-                            <li className={currentPath==='/addProduct'?'active':''} data-active="product"><a href="/addProduct"><i className="fa fa-circle-o text-yellow" /> Thêm sản phẩm</a></li>
+                            <li className={currentPath==='/listProduct'?'active':''} data-active="product"><Link to="/listProduct"><i className="fa fa-circle-o text-yellow" /> Danh sách sản phẩm</Link></li>
+                            <li className={currentPath==='/addProduct'?'active':''} data-active="product"><Link to="/addProduct"><i className="fa fa-circle-o text-yellow" /> Thêm sản phẩm</Link></li>
                         </ul>
                     </li>
-                    <li>
-                        <a href="pages/widgets.html">
-                            <i className="fa fa-th" /> <span>Widgets</span>
-                            <span className="pull-right-container">
-                            <small className="label pull-right bg-green">new</small>
-                            </span>
-                        </a>
-                    </li>
-                    <li className="header">LABELS</li>
-                    <li><Link to="#"><i className="fa fa-circle-o text-red" /> <span>Important</span></Link></li>
-                    <li><Link to="#"><i className="fa fa-circle-o text-yellow" /> <span>Warning</span></Link></li>
-                    <li><Link to="#"><i className="fa fa-circle-o text-aqua" /> <span>Information</span></Link></li>
                 </ul>
                 </section>
                 {/* /.sidebar */}

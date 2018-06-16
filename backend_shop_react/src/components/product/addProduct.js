@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-// import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import SectionHeader from '../layout/sectionHeader';
-import { requestGet, requestDelete } from '../../api/apiRequest';
+import { requestGet } from '../../api/apiRequest';
 import SEVER_CONFIG from '../../config/severConfig';
+import CKEditor from '../lib/ckeditor';
 
 class AddProduct extends Component {
     constructor(props){
@@ -14,13 +15,15 @@ class AddProduct extends Component {
             txtNameProduct: '',
             valueCategory: -1,
             txtUrlImage:'',
-            txtPrice: 0,
+            txtPrice: '',
             txtdesc: '',
             valueStatus: 1,
-
+            isAddSuccess: false,
             errorNameProduct: '',
+            errorvalueCategory: '',
             errortxtPrice: '',
-            errortxtdesc: ''
+            errortxtdesc: '',
+            errortxtUrlImage: ''
         }
     }
     componentDidMount() {
@@ -41,7 +44,99 @@ class AddProduct extends Component {
             [name]: value
         })
     }
+    handleCkeditorChange=(data)=>{
+        this.setState({
+            txtdesc: data
+        })
+    }
+    changeImage=()=>{
+        var file = this.refs.image_upload.files[0];
+        var reader = new FileReader();
+        reader.readAsDataURL(file);//Bắt buộc có nó mới chạy
+        reader.onloadend = () => {
+            this.setState({
+                txtUrlImage: reader.result
+            })
+        }
+    }
+    handleSubmit=(event)=>{
+        console.log(this.state);
+        event.preventDefault();
+        this.setState({
+            errorNameProduct: '',
+            errorvalueCategory: '',
+            errortxtPrice: '',
+            errortxtdesc: '',
+            errortxtUrlImage: '',
+        })
+        let { txtNameProduct, valueCategory, txtPrice, txtdesc, valueStatus }= this.state;
+        if(txtNameProduct===''){
+            return this.setState({
+                errorNameProduct: 'Tên sản phẩm k được bỏ trống'
+            })
+        }
+        if(valueCategory===-1){
+            return this.setState({
+                errorvalueCategory: 'Bạn chưa chọn loại'
+            })
+        }
+        if(txtPrice===''){
+            return this.setState({
+                errortxtPrice: 'Bạn chưa nhập giá'
+            })
+        }
+        if(txtdesc===''){
+            return this.setState({
+                errortxtdesc: 'Bạn chưa nhập mô tả'
+            })
+        }
+        const token=localStorage.getItem('_token');
+        var input = document.querySelector('input[type="file"]');
+        console.log(input);
+        var form = new FormData();
+        form.append('txtNameProduct', txtNameProduct);
+        form.append('valueCategory', valueCategory);
+        form.append('txtPrice', txtPrice);
+        form.append('txtdesc', txtdesc);
+        form.append('valueStatus', valueStatus);
+        form.append('token',token);
+        form.append('file',input.files[0]);
+        const url=`${SEVER_CONFIG.url}/addProduct`;
+        fetch(url,{
+            method: 'POST',
+            body: form
+        })
+        .then(res=>res.json())
+        .then(resjson=>{
+            if(resjson.status==='success'){
+                this.setState({
+                    isAddSuccess: true
+                })
+            }else if(resjson.errors){
+                this.setState({
+                    errorNameCate: resjson.errors.txtNameCate[0]
+                })
+            }
+            else{
+                alert('Có lỗi xảy ra, vui lòng liên hệ quản trị viên');
+            }
+        })
+        .catch(error=>{
+            alert('Có lỗi xảy ra, vui lòng liên hệ quản trị viên');
+        })
+    }
 	render() {
+        let { isAddSuccess }=this.state;
+        if(isAddSuccess){
+            return <Redirect to={{ 
+                pathname: '/listProduct',
+                state: {
+                    msgStatus: 'success',
+                    msgTitle: 'Thông báo',
+                    msgContent: 'Thêm loại thành công!!!'
+                }
+            }} />
+        }
         const { listCategory }=this.state;
         const renderCategory=listCategory.map(e=>
             <option key={e.id} value={e.id}>{e.name}</option>
@@ -56,44 +151,45 @@ class AddProduct extends Component {
                                 <div className="box-header with-border">
                                     <h3 className="box-title">Thêm sản phẩm</h3>
                                 </div>
-                                <form className="form-horizontal" action="{{route('add_product')}}" method="POST" encType="multipart/form-data">
+                                <form className="form-horizontal" onSubmit={this.handleSubmit} encType="multipart/form-data">
                                     <div className="box-body">
                                         <div className="form-group">
                                             <label htmlFor="inputEmail3" className="col-sm-2 control-label">Tên sản phẩm</label>
                                             <div className="col-sm-10">
-                                                <input name="txtNameProduct" type="text" className="form-control" placeholder="Tên sản phẩm" defaultValue={this.state.txtNameProduct} required onChange={this.handleInputChange}/>
+                                                <input name="txtNameProduct" type="text" className="form-control" placeholder="Tên sản phẩm" value={this.state.txtNameProduct} onChange={this.handleInputChange}/>
                                                 <span className="error">{this.state.errorNameProduct}</span>
                                             </div>
                                         </div>
                                         <div className="form-group">
                                             <label htmlFor="inputEmail3" className="col-sm-2 control-label">Loại</label>
                                             <div className="col-sm-10">
-                                                <select name="category" className="form-control select2" style={{width: '100%'}} onChange={this.handleInputChange}>
+                                                <select name="valueCategory" value={this.state.valueCategory} className="form-control select2" style={{width: '100%'}} onChange={this.handleInputChange}>
                                                     <option key={-1} value={-1}>--Chọn loại sản phẩm--</option>
                                                     {renderCategory}
                                                 </select>
+                                                <span className="error">{this.state.errorvalueCategory}</span>
                                             </div>
                                         </div>
                                         <div className="form-group">
                                             <label htmlFor="inputEmail3" className="col-sm-2 control-label">Giá</label>
                                             <div className="col-sm-10">
-                                                <input name="txtPrice" type="text" className="form-control" id="price" placeholder="Giá sản phẩm" defaultValue={this.state.txtPrice} required step="0.01" onChange={this.handleInputChange}/>
+                                                <input name="txtPrice" type="number" className="form-control" id="price" placeholder="Giá sản phẩm" value={this.state.txtPrice} required step="0.01" onChange={this.handleInputChange}/>
                                                 <span className="error">{this.state.errortxtPrice}</span>
                                             </div>
                                         </div>
                                         <div className="form-group">
                                             <label htmlFor="inputPassword3" className="col-sm-2 control-label">Hình</label>
                                             <div className="col-sm-10">
-                                                <input name="image" type="file" id="imgInp" />
-                                                {/* <span className="error">Lỗi</span> */}
+                                                <input ref="image_upload" name="txtUrlImage" type="file" id="imgInp" onChange={this.changeImage} />
                                                 <br />
+                                                <span className="error">{this.state.errortxtUrlImage}</span>
                                                 <img id="blah" src={this.state.txtUrlImage===''?'../image/not_found_image.jpg':this.state.txtUrlImage} alt="Hình ảnh sản phẩm" width="122px" height="133px" />
                                             </div>
                                         </div>
                                         <div className="form-group">
                                             <label htmlFor="inputEmail3" className="col-sm-2 control-label">Mô tả</label>
                                             <div className="col-sm-10">
-                                                <textarea id="desc" name="txtdesc" className="form-control" rows={10} placeholder="Sơ lược về bài đăng" required defaultValue={this.state.txtdesc} onChange={this.handleInputChange}/>
+                                                <CKEditor name={'txtdesc'} value={this.state.txtdesc} onChange={this.handleCkeditorChange}/>
                                                 <span className="error">{this.state.errortxtdesc}</span>
                                             </div>
                                         </div>
@@ -116,7 +212,6 @@ class AddProduct extends Component {
                     </div>
                 </section>
             </div>
-
 		);
 	}
 }

@@ -66,10 +66,9 @@ class AddCategory extends Component {
             return <Redirect to={{ 
                 pathname: '/category',
                 state: {
-                    from: this.props.location.pathname,
                     msgStatus: 'success',
                     msgTitle: 'Thông báo',
-                    msgContent: 'Thêm loại thành công!!!'
+                    msgContent: 'Thêm sản phẩm thành công!!!'
                 }
             }} />
         }
